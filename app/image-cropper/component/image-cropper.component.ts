@@ -81,10 +81,10 @@ export class ImageCropperComponent implements OnChanges, OnInit {
     @Input() containWithinAspectRatio = false;
     @Input() hideResizeSquares = false;
     @Input() cropper: CropperPosition = {
-        x1: -100,
-        y1: -100,
-        x2: 10000,
-        y2: 10000
+        x1: 0,
+        y1: 0,
+        x2: 50,
+        y2: 50
     };
     @HostBinding('style.text-align')
     @Input() alignImage: 'left' | 'center' = 'center';
@@ -200,10 +200,10 @@ export class ImageCropperComponent implements OnChanges, OnInit {
             width: 0,
             height: 0
         };
-        this.cropper.x1 = -100;
-        this.cropper.y1 = -100;
-        this.cropper.x2 = 10000;
-        this.cropper.y2 = 10000;
+        this.cropper.x1 = 0;
+        this.cropper.y1 = 0;
+        this.cropper.x2 = 50;
+        this.cropper.y2 = 50;
     }
 
     private loadImage(imageBase64: string, imageType: string) {
@@ -417,8 +417,12 @@ export class ImageCropperComponent implements OnChanges, OnInit {
         } else {
             if (!this.maintainAspectRatio) {
                 this.cropper.x1 = 0;
+                this.cropper.x2 = sourceImageElement.offsetWidth/4;
+                if(this.cropper.x2 > sourceImageElement.offsetWidth)
                 this.cropper.x2 = sourceImageElement.offsetWidth;
                 this.cropper.y1 = 0;
+                this.cropper.y2 = sourceImageElement.offsetHeight/4;
+                if(this.cropper.y2 > sourceImageElement.offsetHeight)
                 this.cropper.y2 = sourceImageElement.offsetHeight;
             } else if (sourceImageElement.offsetWidth / this.aspectRatio < sourceImageElement.offsetHeight) {
                 this.cropper.x1 = 0;
